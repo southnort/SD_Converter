@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Data;
+using System.IO;
+using System.Globalization;
 
 
 namespace SD_Converter
@@ -10,19 +13,49 @@ namespace SD_Converter
 
         public string GetTableText(string numbersText)
         {
+            var table = GetTable(numbersText);
+            return table.TableToString();
+        }
+
+        public DataTable GetTable(string numbersText)
+        {
             var urls = CreateURLs(numbersText);
 
             var htmlNodes = new List<string>();
-            foreach (var url in urls)
+            //foreach (var url in urls)
+            //{
+            //    htmlNodes.Add(GetRawHtml(url));
+            //}
+
+            var files = new List<string>()
             {
-                htmlNodes.Add(GetRawHtml(url));
+                "ManageEngine ServiceDesk Plus1.html",
+                "ManageEngine ServiceDesk Plus2.html",
+                "ManageEngine ServiceDesk Plus3.html",
+                "ManageEngine ServiceDesk Plus4.html",
+                "ManageEngine ServiceDesk Plus5.html",
+
+            };
+
+            foreach (var file in files)
+            {
+                htmlNodes.Add(
+                    System.IO.File.ReadAllText(
+                        Environment.GetFolderPath(Environment.SpecialFolder
+                        .DesktopDirectory) + "\\" + file
+                        )
+                    );
+
             }
+
 
             var constructor = new TableConstructor();
             var table = constructor.ConstructTable(htmlNodes);
 
-            return table.ToString();
+            return table;
+
         }
+
 
         private List<string> CreateURLs(string rawText)
         {
@@ -49,6 +82,7 @@ namespace SD_Converter
         }
 
 
+        
 
     }
 }

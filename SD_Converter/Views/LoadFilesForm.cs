@@ -8,8 +8,7 @@ using System.Windows.Forms;
 namespace SD_Converter
 {
     public partial class LoadFilesForm : Form
-    {
-        private string selectedFilePath;
+    {       
         private LoadFilesController controller;
 
         public LoadFilesForm()
@@ -22,16 +21,34 @@ namespace SD_Converter
 
         private void loadButton_Click(object sender, EventArgs e)
         {
-            //получаем список ссылок на нужные записи
-            var text = controller.GetTableText(numbersTextBox.Text);
-            exportTextBox.Text = text;
+            //var text = controller.GetTableText(numbersTextBox.Text);
+            //exportTextBox.Text = text;
 
-            if (exportTextBox.Text.Length > 0)
-                Clipboard.SetText(exportTextBox.Text);
+            //if (exportTextBox.Text.Length > 0)
+            //    {Clipboard.SetText(exportTextBox.Text);
 
-            MessageBox.Show("Таблицу можно вставить в Excel", "Данные скопированы",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            //MessageBox.Show("Таблицу можно вставить в Excel", "Данные скопированы",
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Information);
+            //}
+
+
+            var table = controller.GetTable(numbersTextBox.Text);
+            if (table != null)
+            {
+                var path = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)
+                    + "\\" + Guid.NewGuid().ToString() + ".csv";
+
+
+
+                var csvText = table.ToCsv();
+                exportTextBox.Text = csvText;
+
+                File.WriteAllText(path, csvText);
+
+                MessageBox.Show("Готово");
+
+            }
 
         }
 
