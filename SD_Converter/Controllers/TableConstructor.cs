@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using HtmlAgilityPack;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 
 namespace SD_Converter
@@ -96,11 +97,35 @@ namespace SD_Converter
 
         private string GetFormNumber(string node)
         {
-            return "";
+            var document = new HtmlDocument();
+            document.LoadHtml(node);
+
+            var theme = document.GetElementbyId("requestSubject_ID").InnerText;
+
+            var descriptionArr = document.GetElementbyId("WORKORDERDESC_FRAME").InnerText
+                .Split('\n');
+
+            string pattern1 = @"[ф]?[.]?[ ]?[0-9]{3}";
+            string pattern2 = @"0503[0-9]{3,3}[\S]*";
+
+            Regex regex = new Regex();
+
+
+
+
+            return "СводСмарт";
         }
 
         private string GetDescription(string node)
         {
+            var document = new HtmlDocument();
+            document.LoadHtml(node);
+
+            var theme = document.GetElementbyId("requestSubject_ID").InnerText;
+
+            var descriptionArr = document.GetElementbyId("WORKORDERDESC_FRAME").InnerText
+                .Split('\n');
+
             return "";
         }
 
@@ -118,8 +143,8 @@ namespace SD_Converter
             document.LoadHtml(node);
             var value = document.GetElementbyId("status_PH").InnerText;
 
-            if (value.Contains("Выполнена")) return "Выполнена";
-            else return "Зарегистрирована";
+            if (value.Contains("Выполнена")) return "Выполнено";
+            else return "Зарегистрировано";
         }
 
         private string GetCreationDate(string node)
@@ -164,12 +189,9 @@ namespace SD_Converter
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
-            var arr = document.DocumentNode
-                .SelectNodes("//td[contains(@class,'rved-values')]");
-            var value = arr[0].InnerText;
+            var n = document.GetElementbyId("requesterName_PanelId");
 
-
-            //.SelectNodes("td.rved-values")[0].InnerText;
+            var value = n.Attributes["value"].Value;
 
             return value;
         }
@@ -178,9 +200,17 @@ namespace SD_Converter
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
-            var value = document.DocumentNode
-                .SelectNodes("//td[contains(@class,'rved-values')]")[1].InnerText;
+            var n = document.GetElementbyId("EMAILID_RCUR");
+            if (n == null)
+            {
+                var a = document.DocumentNode
+                    .SelectNodes("//td[contains(@class, 'rved-values')]");
+                n = a[58];
+            }
 
+            var value = n.InnerText
+                .Replace(" ", "")
+                .Replace("\n","");
             return value;
         }
 
@@ -189,8 +219,21 @@ namespace SD_Converter
             var document = new HtmlDocument();
             document.LoadHtml(node);
             var value = document.GetElementbyId("OWNERID_CUR").InnerText;
+            if (value.Contains("Специалист ")) return "support";
+            else
+            {
+                //Из полного ФИО собираем краткое ФИО
+                StringBuilder sb = new StringBuilder();
+                var arr = value.Split(' ');
+                sb.Append(arr[0]);
+                sb.Append(" ");
+                sb.Append(arr[1][0]);
+                sb.Append(". ");
+                sb.Append(arr[2][0]);
+                sb.Append(".");
 
-            return value;
+                return sb.ToString();
+            }
         }
 
         private string GetComment(string node)

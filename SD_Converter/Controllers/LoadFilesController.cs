@@ -29,11 +29,20 @@ namespace SD_Converter
 
             var files = new List<string>()
             {
-                "ManageEngine ServiceDesk Plus1.html",
-                "ManageEngine ServiceDesk Plus2.html",
-                "ManageEngine ServiceDesk Plus3.html",
+                "33222111ManageEngine ServiceDesk Plus.html",
+                "332123ManageEngine ServiceDesk Plus.html",
+                "442131ManageEngine ServiceDesk Plus.html",
                 "ManageEngine ServiceDesk Plus4.html",
+                "2212ManageEngine ServiceDesk Plus.html",
+                "55412ManageEngine ServiceDesk Plus.html",
+                "ManageEngine ServiceDesk Plus1.html",
+                "ManageEngine ServiceDesk Plus3.html",
+                "33213ManageEngine ServiceDesk Plus.html",
+                "221ManageEngine ServiceDesk Plus.html",
+                "ManageEngine ServiceDesk Plus7.html",
+                "ManageEngine ServiceDesk Plus2.html",
                 "ManageEngine ServiceDesk Plus5.html",
+                "ManageEngine ServiceDesk Plus6.html",
 
             };
 
@@ -82,7 +91,7 @@ namespace SD_Converter
         }
 
 
-        
+
 
     }
 }

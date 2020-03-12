@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace SD_Converter
 {
     public partial class LoadFilesForm : Form
-    {       
+    {
         private LoadFilesController controller;
 
         public LoadFilesForm()
@@ -21,6 +21,7 @@ namespace SD_Converter
 
         private void loadButton_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             //var text = controller.GetTableText(numbersTextBox.Text);
             //exportTextBox.Text = text;
 
@@ -50,6 +51,7 @@ namespace SD_Converter
 
             }
 
+            Cursor.Current = Cursors.Default;
         }
 
 
