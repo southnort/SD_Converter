@@ -59,7 +59,7 @@ namespace SD_Converter
 
             catch (Exception ex)
             {
-                exportTextBox.Text = ex.Message;
+                exportTextBox.Text = ex.ToString();
                 exportTextBox.ForeColor = System.Drawing.Color.DarkRed;
             }
 

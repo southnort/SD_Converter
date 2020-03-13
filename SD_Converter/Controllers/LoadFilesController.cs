@@ -10,6 +10,9 @@ namespace SD_Converter
 {
     public class LoadFilesController
     {
+        private readonly string login = "specialist3";
+        private readonly string password = "vgYD4yEg";
+
 
         public string GetTableText(string numbersText)
         {
@@ -20,6 +23,15 @@ namespace SD_Converter
         public DataTable GetTable(string numbersText)
         {
             var htmlNodes = new List<string>();
+            var authorizator = new AuthorizationController();
+            var cookie = authorizator.CreateCookieContainer(login,password);
+
+            var client = new WebClientEx();
+            client.Coo
+
+
+            var loader = new DataLoader(client);
+
 #if DEBUG
             var files = new List<string>()
             {
@@ -55,10 +67,10 @@ namespace SD_Converter
 
 
             var urls = CreateURLs(numbersText);
-            
+
             foreach (var url in urls)
             {
-                htmlNodes.Add(GetRawHtml(url));
+                htmlNodes.Add(GetRawHtml(url, cookie));
             }
 
 #endif
@@ -87,8 +99,17 @@ namespace SD_Converter
             return list;
         }
 
-        private string GetRawHtml(string url)
+        private string GetRawHtml(string url, CookieContainer cookie)
         {
+
+
+
+
+
+
+
+
+
             using (WebClient client = new WebClient())
             {
                 var htmlCode = client.DownloadString(url);
@@ -104,7 +125,7 @@ namespace SD_Converter
             }
         }
 
-
+        
 
 
     }

@@ -59,9 +59,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AuthentificationController.cs" />
+    <Compile Include="Controllers\AuthorizationController.cs" />
+    <Compile Include="Controllers\DataLoader.cs" />
     <Compile Include="Controllers\LoadFilesController.cs" />
     <Compile Include="Controllers\TableConstructor.cs" />
+    <Compile Include="Controllers\WebClientEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Extensions.cs" />
     <Compile Include="Views\LoadFilesForm.cs">
       <SubType>Form</SubType>
