@@ -19,14 +19,8 @@ namespace SD_Converter
 
         public DataTable GetTable(string numbersText)
         {
-            var urls = CreateURLs(numbersText);
-
             var htmlNodes = new List<string>();
-            //foreach (var url in urls)
-            //{
-            //    htmlNodes.Add(GetRawHtml(url));
-            //}
-
+#if DEBUG
             var files = new List<string>()
             {
                 "33222111ManageEngine ServiceDesk Plus.html",
@@ -57,6 +51,18 @@ namespace SD_Converter
 
             }
 
+#else
+
+
+            var urls = CreateURLs(numbersText);
+            
+            foreach (var url in urls)
+            {
+                htmlNodes.Add(GetRawHtml(url));
+            }
+
+#endif
+
 
             var constructor = new TableConstructor();
             var table = constructor.ConstructTable(htmlNodes);
@@ -86,6 +92,14 @@ namespace SD_Converter
             using (WebClient client = new WebClient())
             {
                 var htmlCode = client.DownloadString(url);
+
+                var path = string.Format("{0}\\{2}\\{1}.html",
+                        Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                        Guid.NewGuid().ToString(),
+                        "HtmlFiles"
+                        );
+
+                File.WriteAllText(path, htmlCode);
                 return htmlCode;
             }
         }

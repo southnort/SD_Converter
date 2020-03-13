@@ -101,17 +101,38 @@ namespace SD_Converter
             document.LoadHtml(node);
 
             var theme = document.GetElementbyId("requestSubject_ID").InnerText;
+            var description = document.GetElementbyId("WORKORDERDESC_FRAME").InnerText;
 
-            var descriptionArr = document.GetElementbyId("WORKORDERDESC_FRAME").InnerText
-                .Split('\n');
+            var inputString = string.Format("{0} {1}", theme, description);
 
-            string pattern1 = @"[ф]?[.]?[ ]?[0-9]{3}";
-            string pattern2 = @"0503[0-9]{3,3}[\S]*";
+            List<string> patterns = new List<string>
+            {
+                @"0503[0-9]{3,3}[\S]*",
+                @"[ф]?[.]?[ ]?[0-9]{3}",                
+                @"Аренда[ -_]?[УБП]?[НУБП]*",
+            };
 
-            Regex regex = new Regex();
 
+            foreach (var pattern in patterns)
+            {
+                Regex regex = new Regex(pattern);
+                string result;
+                foreach (var str in inputString)
+                {
+                    if (regex.IsMatch(inputString))
+                    {
+                        result = regex.Match(inputString).Value.ToLower()
+                            .Replace("ф", "")
+                            .Replace(" ", "")
+                            .Replace(".", "");
 
+                        if (result.Length == 3)
+                            result = "0503" + result;
 
+                        return result;
+                    }
+                }
+            }
 
             return "СводСмарт";
         }
@@ -122,11 +143,11 @@ namespace SD_Converter
             document.LoadHtml(node);
 
             var theme = document.GetElementbyId("requestSubject_ID").InnerText;
+            var description = document.GetElementbyId("WORKORDERDESC_FRAME").InnerText;
 
-            var descriptionArr = document.GetElementbyId("WORKORDERDESC_FRAME").InnerText
-                .Split('\n');
+            var inputString = string.Format("{0} {1}", theme, description);
 
-            return "";
+            return inputString;
         }
 
         private string GetSDNumber(string node)
@@ -210,7 +231,7 @@ namespace SD_Converter
 
             var value = n.InnerText
                 .Replace(" ", "")
-                .Replace("\n","");
+                .Replace("\n", "");
             return value;
         }
 
