@@ -70,8 +70,16 @@ namespace SD_Converter
         {
             HttpWebRequest request =
                 (HttpWebRequest)HttpWebRequest.Create(url);
+
             request.CookieContainer = cookieContainer;
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(url);
+            request.Host = "10.91.114.165:8080";
+            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36";
+            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
+            request.Referer = "http://10.91.114.165:8080/WOListView.do";
+            request.TransferEncoding = "gzip, deflate";
+            
+
+            byte[] bytes = Encoding.UTF8.GetBytes(url);
 
             using (Stream dataStream = request.GetRequestStream())
             {

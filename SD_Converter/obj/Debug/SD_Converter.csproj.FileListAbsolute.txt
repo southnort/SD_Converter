@@ -12,7 +12,6 @@ C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Debug\HtmlAgi
 C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Debug\System.ValueTuple.xml
-C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\obj\Debug\SD_Converter.csprojAssemblyReference.cache
 C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\obj\Debug\SD_Converter.Properties.Resources.resources
 C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\obj\Debug\SD_Converter.csproj.GenerateResource.cache
 C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\obj\Debug\SD_Converter.csproj.CoreCompileInputs.cache
