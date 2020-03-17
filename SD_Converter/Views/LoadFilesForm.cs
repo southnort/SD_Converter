@@ -1,14 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
+using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 
 namespace SD_Converter
 {
     public partial class LoadFilesForm : Form
     {
+        private readonly string login = "specialist3";
+        private readonly string password = "vgYD4yEg";
         private LoadFilesController controller;
 
         public LoadFilesForm()
@@ -16,6 +23,14 @@ namespace SD_Converter
             InitializeComponent();
             Text = Application.ProductVersion;
             controller = new LoadFilesController();
+
+#if DEBUG
+
+#else
+            exportTextBox.Text =
+                  controller.SetAuthorization(login, password);
+#endif
+
         }
 
 
@@ -24,18 +39,6 @@ namespace SD_Converter
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                //var text = controller.GetTableText(numbersTextBox.Text);
-                //exportTextBox.Text = text;
-
-                //if (exportTextBox.Text.Length > 0)
-                //    {Clipboard.SetText(exportTextBox.Text);
-
-                //MessageBox.Show("Таблицу можно вставить в Excel", "Данные скопированы",
-                //        MessageBoxButtons.OK,
-                //        MessageBoxIcon.Information);
-                //}
-
-
                 var table = controller.GetTable(numbersTextBox.Text);
                 if (table != null)
                 {

@@ -3,7 +3,7 @@ using System.Net;
 
 namespace SD_Converter
 {
-    public class WebClientEx : WebClient
+    class WebClientEx : WebClient
     {
         private CookieContainer _cookieContainer = new CookieContainer();
 

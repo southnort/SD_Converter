@@ -27,7 +27,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
-        {            
+        {
             this.loadButton = new System.Windows.Forms.Button();
             this.numbersTextBox = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -139,7 +139,7 @@
         }
 
         #endregion
-      
+
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.RichTextBox numbersTextBox;
         private System.Windows.Forms.Button button1;
