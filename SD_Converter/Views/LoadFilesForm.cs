@@ -38,7 +38,7 @@ namespace SD_Converter
                 var table = controller.GetTable(numbersTextBox.Text);
                 if (table != null)
                 {
-                    var path = string.Format("{0}\\{1}.xls",
+                    var path = string.Format("{0}\\{1}.xlsx",
                         Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
                         DateTime.Now.ToString("HH-mm-ss dd-MM"));
 
