@@ -24,12 +24,8 @@ namespace SD_Converter
             Text = Application.ProductVersion;
             controller = new LoadFilesController();
 
-#if DEBUG
-
-#else
             exportTextBox.Text =
-                  controller.SetAuthorization(login, password);
-#endif
+      controller.SetAuthorization(login, password);
 
         }
 
@@ -50,7 +46,7 @@ namespace SD_Converter
                     var csvText = table.ToCsv();
                     exportTextBox.Text = csvText;
 
-                    File.WriteAllText(path, csvText);
+                    File.WriteAllText(path, csvText, Encoding.UTF8);
 
                     System.Diagnostics.Process.Start(path);
 
