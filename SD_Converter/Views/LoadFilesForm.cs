@@ -38,15 +38,15 @@ namespace SD_Converter
                 var table = controller.GetTable(numbersTextBox.Text);
                 if (table != null)
                 {
-                    var path = string.Format("{0}\\{1}.csv",
+                    var path = string.Format("{0}\\{1}.xls",
                         Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
                         DateTime.Now.ToString("HH-mm-ss dd-MM"));
 
 
-                    var csvText = table.ToCsv();
-                    exportTextBox.Text = csvText;
+                    var writer = new ExcelWriter();
+                    writer.SaveTableToExcel(table, path);
 
-                    File.WriteAllText(path, csvText, Encoding.UTF8);
+                    
 
                     System.Diagnostics.Process.Start(path);
 

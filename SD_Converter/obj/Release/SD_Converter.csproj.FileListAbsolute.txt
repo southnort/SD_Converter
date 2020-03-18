@@ -39,3 +39,14 @@ C:\Users\Admin\Documents\SD_Converter\SD_Converter\obj\Release\SD_Converter.cspr
 C:\Users\Admin\Documents\SD_Converter\SD_Converter\obj\Release\SD_Converter.csproj.CopyComplete
 C:\Users\Admin\Documents\SD_Converter\SD_Converter\obj\Release\SD_Converter.exe
 C:\Users\Admin\Documents\SD_Converter\SD_Converter\obj\Release\SD_Converter.pdb
+C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Release\ClosedXML.dll
+C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Release\DocumentFormat.OpenXml.dll
+C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Release\ExcelNumberFormat.dll
+C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Release\FastMember.dll
+C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Release\System.IO.FileSystem.Primitives.dll
+C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Release\System.IO.Packaging.dll
+C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Release\ClosedXML.pdb
+C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Release\ClosedXML.xml
+C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Release\DocumentFormat.OpenXml.xml
+C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\bin\Release\ExcelNumberFormat.xml
+C:\Users\Ярик\Documents\Projects\SD_Converter\SD_Converter\obj\Release\SD_Converter.csprojAssemblyReference.cache
