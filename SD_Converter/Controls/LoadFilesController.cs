@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using System.Data;
+using HtmlAgilityPack;
 
 
 namespace SD_Converter
@@ -42,7 +43,24 @@ namespace SD_Converter
         private string GetRawHtml(string url)
         {
             var htmlText = client.DownloadString(url);
+            var document = new HtmlDocument();
 
+            document.LoadHtml(htmlText);
+            var descriptionPath = document.GetElementbyId("WORKORDERDESC_FRAME")
+                .Attributes["src"].Value;
+            if (descriptionPath != null || descriptionPath != string.Empty)
+            {
+                var description = client.DownloadString
+                    (string.Format("{0}/{1}", 
+                    "http://10.91.114.165:8080", descriptionPath));
+
+                string identifier = "<div id='descriptioninframe'>";
+
+                htmlText += string.Format("{0}\n{1}\n{2}",
+                    identifier,
+                    description,
+                    "</div>");
+            }
             return htmlText;
 
         }

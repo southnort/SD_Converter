@@ -20,17 +20,18 @@ namespace SD_Converter
                 var row = table.NewRow();
                 row["Number"] = GetNumber(node);
                 row["FormNumber"] = GetFormNumber(node);
-                row["Description"] = GetDescription(node);
                 row["SDNumber"] = GetSDNumber(node);
                 row["Status"] = GetStatus(node);
                 row["CreationDate"] = GetCreationDate(node);
                 row["CompleteDate"] = GetCompleteDate(node);
-                row["Parent"] = GetParent(node);
-                row["Organisation"] = GetOrganisationName(node);
                 row["ClientFIO"] = GetClientFIO(node);
                 row["Email"] = GetEmail(node);
                 row["BFTFIO"] = GetBFTFIO(node);
                 row["Comment"] = GetComment(node);
+
+                row["Description"] = GetDescription(node);
+                row["Organisation"] = GetOrganisationName(node);
+                row["Parent"] = GetParent(node);
 
                 table.Rows.Add(row);
             }
@@ -137,17 +138,37 @@ namespace SD_Converter
             return "СводСмарт";
         }
 
+
+
         private string GetDescription(string node)
+        {
+            var descriptionNodes = GetDescriptionNodes(node);
+            foreach (var st in descriptionNodes)
+            {
+                if (
+                    st.Length > 1 &&
+                    !st.Contains("Добрый день") &&
+                    !st.Contains("Здравствуйте"))
+                    return st;
+            }
+
+            return "";
+        }
+
+        private string[] GetDescriptionNodes(string node)
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
 
             var theme = document.GetElementbyId("requestSubject_ID").InnerText;
-            var description = document.GetElementbyId("WORKORDERDESC_FRAME").InnerText;
+            var descriptionNode = document.GetElementbyId("descriptioninframe");
 
-            var inputString = string.Format("{0} {1}", theme, description);
+            var descriptionText = descriptionNode
+                .InnerText;
 
-            return inputString;
+            return (descriptionText + theme)
+                .Split(new char[] { '\n', },
+                StringSplitOptions.RemoveEmptyEntries);
         }
 
         private string GetSDNumber(string node)
@@ -203,6 +224,15 @@ namespace SD_Converter
 
         private string GetOrganisationName(string node)
         {
+            var descriptionNodes = GetDescriptionNodes(node);
+            foreach (var st in descriptionNodes)
+            {
+                if (
+                    st.ToLower().Contains("организация") ||
+                    st.ToLower().Contains("бухгалтер")
+                    )
+                    return st;
+            }
             return "";
         }
 
