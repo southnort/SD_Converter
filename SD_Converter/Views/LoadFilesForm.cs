@@ -33,6 +33,7 @@ namespace SD_Converter
         private void loadButton_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
+            Hide();
             try
             {
                 var table = controller.GetTable(numbersTextBox.Text);
@@ -46,7 +47,7 @@ namespace SD_Converter
                     var writer = new ExcelWriter();
                     writer.SaveTableToExcel(table, path);
 
-                    
+
 
                     System.Diagnostics.Process.Start(path);
 
@@ -62,7 +63,7 @@ namespace SD_Converter
                 exportTextBox.ForeColor = System.Drawing.Color.DarkRed;
             }
 
-
+            Show();
             Cursor.Current = Cursors.Default;
         }
 

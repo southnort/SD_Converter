@@ -130,7 +130,6 @@
             this.Controls.Add(this.loadButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "LoadFilesForm";
             this.Text = "-- --";
             this.ResumeLayout(false);

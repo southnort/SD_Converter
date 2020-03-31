@@ -12,34 +12,34 @@ namespace SD_Converter
 {
     public class TableConstructor
     {
-        public DataTable ConstructTable(List<string> htmlNodes)
-        {
-            var table = CreateTable();
-            foreach (var node in htmlNodes)
-            {
-                var row = table.NewRow();
-                row["Number"] = GetNumber(node);
-                row["FormNumber"] = GetFormNumber(node);
-                row["SDNumber"] = GetSDNumber(node);
-                row["Status"] = GetStatus(node);
-                row["CreationDate"] = GetCreationDate(node);
-                row["CompleteDate"] = GetCompleteDate(node);
-                row["ClientFIO"] = GetClientFIO(node);
-                row["Email"] = GetEmail(node);
-                row["BFTFIO"] = GetBFTFIO(node);
-                row["Comment"] = GetComment(node);
+        //public DataTable ConstructTable(List<string> htmlNodes)
+        //{
+        //    var table = CreateTable();
+        //    foreach (var node in htmlNodes)
+        //    {
+        //        var row = table.NewRow();
+        //        row["Number"] = GetNumber(node);
+        //        row["FormNumber"] = GetFormNumber(node);
+        //        row["SDNumber"] = GetSDNumber(node);
+        //        row["Status"] = GetStatus(node);
+        //        row["CreationDate"] = GetCreationDate(node);
+        //        row["CompleteDate"] = GetCompleteDate(node);
+        //        row["ClientFIO"] = GetClientFIO(node);
+        //        row["Email"] = GetEmail(node);
+        //        row["BFTFIO"] = GetBFTFIO(node);
+        //        row["Comment"] = GetComment(node);
 
-                row["Description"] = GetDescription(node);
-                row["Organisation"] = GetOrganisationName(node);
-                row["Parent"] = GetParent(node);
+        //        row["Description"] = GetDescription(node);
+        //      //  row["Organisation"] = GetOrganisationName(node);
+        //        row["Parent"] = GetParent(node);
 
-                table.Rows.Add(row);
-            }
+        //        table.Rows.Add(row);
+        //    }
 
-            return table;
-        }
+        //    return table;
+        //}
 
-        private DataTable CreateTable()
+        public DataTable CreateTable()
         {
             // Create new DataColumn, set DataType, 
             // ColumnName and add to DataTable.    
@@ -91,12 +91,12 @@ namespace SD_Converter
 
 
 
-        private string GetNumber(string node)
+        public string GetNumber(string node)
         {
             return "";
         }
 
-        private string GetFormNumber(string node)
+        public string GetFormNumber(string node)
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
@@ -138,40 +138,50 @@ namespace SD_Converter
             return "СводСмарт";
         }
 
-
-
-        private string GetDescription(string node)
-        {
-            var descriptionNodes = GetDescriptionNodes(node);
-            foreach (var st in descriptionNodes)
-            {
-                if (
-                    st.Length > 1 &&
-                    !st.Contains("Добрый день") &&
-                    !st.Contains("Здравствуйте"))
-                    return st;
-            }
-
-            return "";
-        }
-
-        private string[] GetDescriptionNodes(string node)
+        public string GetTheme(string node)
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
 
-            var theme = document.GetElementbyId("requestSubject_ID").InnerText;
-            var descriptionNode = document.GetElementbyId("descriptioninframe");
+            var theme = document
+                .GetElementbyId("requestSubject_ID")
+                .InnerText.Replace("&quot;", "\"");
 
-            var descriptionText = descriptionNode
-                .InnerText;
-
-            return (descriptionText + theme)
-                .Split(new char[] { '\n', },
-                StringSplitOptions.RemoveEmptyEntries);
+            return theme;
         }
 
-        private string GetSDNumber(string node)
+
+        public string GetDescription(string node)
+        {
+            var document = new HtmlDocument();
+            document.LoadHtml(node);
+
+            var descriptionNode = document
+                .GetElementbyId("descriptioninframe");
+
+            var descriptionText = descriptionNode
+                .InnerText.Replace("&quot;", "\"");
+
+            return descriptionText;
+        }
+
+        //public string[] GetDescriptionNodes(string node)
+        //{
+        //    var document = new HtmlDocument();
+        //    document.LoadHtml(node);
+
+        //    var theme = document.GetElementbyId("requestSubject_ID").InnerText;
+        //    var descriptionNode = document.GetElementbyId("descriptioninframe");
+
+        //    var descriptionText = descriptionNode
+        //        .InnerText;
+
+        //    return (descriptionText + theme)
+        //        .Split(new char[] { '\n', },
+        //        StringSplitOptions.RemoveEmptyEntries);
+        //}
+
+        public string GetSDNumber(string node)
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
@@ -179,17 +189,17 @@ namespace SD_Converter
                 document.GetElementbyId("requestId").InnerText;
         }
 
-        private string GetStatus(string node)
+        public int GetStatus(string node)
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
             var value = document.GetElementbyId("status_PH").InnerText;
 
-            if (value.Contains("Выполнена")) return "Выполнено";
-            else return "Зарегистрировано";
+            if (value.Contains("Выполнена")) return 0;
+            else return 1;
         }
 
-        private string GetCreationDate(string node)
+        public string GetCreationDate(string node)
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
@@ -205,7 +215,7 @@ namespace SD_Converter
             }
         }
 
-        private string GetCompleteDate(string node)
+        public string GetCompleteDate(string node)
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
@@ -217,26 +227,26 @@ namespace SD_Converter
             else return "";
         }
 
-        private string GetParent(string node)
+        public string GetParent(string node)
         {
             return "";
         }
 
-        private string GetOrganisationName(string node)
-        {
-            var descriptionNodes = GetDescriptionNodes(node);
-            foreach (var st in descriptionNodes)
-            {
-                if (
-                    st.ToLower().Contains("организация") ||
-                    st.ToLower().Contains("бухгалтер")
-                    )
-                    return st;
-            }
-            return "";
-        }
+        //public string GetOrganisationName(string node)
+        //{
+        //    var descriptionNodes = GetDescriptionNodes(node);
+        //    foreach (var st in descriptionNodes)
+        //    {
+        //        if (
+        //            st.ToLower().Contains("организация") ||
+        //            st.ToLower().Contains("бухгалтер")
+        //            )
+        //            return st;
+        //    }
+        //    return "";
+        //}
 
-        private string GetClientFIO(string node)
+        public string GetClientFIO(string node)
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
@@ -247,7 +257,7 @@ namespace SD_Converter
             return value;
         }
 
-        private string GetEmail(string node)
+        public string GetEmail(string node)
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
@@ -265,17 +275,19 @@ namespace SD_Converter
             return value;
         }
 
-        private string GetBFTFIO(string node)
+        public string GetBFTFIO(string node)
         {
             var document = new HtmlDocument();
             document.LoadHtml(node);
             var value = document.GetElementbyId("OWNERID_CUR").InnerText;
             if (value.Contains("Специалист ")) return "support";
+            else if (value.Contains("Чубарых")) return "Чубарых О.В.";
             else
             {
                 //Из полного ФИО собираем краткое ФИО
                 StringBuilder sb = new StringBuilder();
-                var arr = value.Split(' ');
+                var separators = new char[] { ' ', '.' };
+                var arr = value.Split(separators, StringSplitOptions.RemoveEmptyEntries);
                 sb.Append(arr[0]);
                 sb.Append(" ");
                 sb.Append(arr[1][0]);
